@@ -41,6 +41,7 @@ class GroqLLM(metaclass=Singleton):
             temperature=self.temperature,
             streaming=self.streaming,
             max_tokens=self.max_tokens,
+            api_key=self.settings.GROQ_API_KEY,
         )
 
 

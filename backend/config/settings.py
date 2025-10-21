@@ -23,7 +23,7 @@ class Settings(BaseSettings):
 
     # LLM settings
     GROQ_API_KEY: str
-    DEFAULT_MODEL: str = "meta-llama/llama-4-maverick-17b-128e-instruct"
+    DEFAULT_MODEL: str = "llama-3.1-8b-instant"
     DEFAULT_TEMPERATURE: float = 0.0
 
     @field_validator("ALLOWED_ORIGINS")
