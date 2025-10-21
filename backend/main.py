@@ -2,8 +2,12 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from config.settings import get_settings
+from routers import story, job
+from db.database import create_tables
 
 settings = get_settings()
+
+create_tables()
 
 app = FastAPI(
     title="Interactive Story Generator",
@@ -20,6 +24,10 @@ app.add_middleware(
     allow_headers=["*"],
     allow_credentials=True,
 )
+
+app.include_router(story.router, prefix=settings.API_PREFIX)
+app.include_router(job.router, prefix=settings.API_PREFIX)
+
 
 if __name__ == "__main__":
     import uvicorn
