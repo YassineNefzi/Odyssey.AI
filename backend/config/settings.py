@@ -19,7 +19,7 @@ class Settings(BaseSettings):
 
     DEBUG: bool = False
 
-    DATABASE_URL: str = None
+    DATABASE_URL: Optional[str] = None
     API_PREFIX: str = "/api"
     ALLOWED_ORIGINS: str = ""
 
