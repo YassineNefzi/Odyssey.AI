@@ -17,14 +17,28 @@ class Settings(BaseSettings):
     LOG_LEVEL: str = "DEBUG"
     LOG_FILE: Optional[str] = None
 
-    DATABASE_URL: str
-    API_PREFIX: str
+    DEBUG: bool = False
+
+    DATABASE_URL: str = None
+    API_PREFIX: str = "/api"
     ALLOWED_ORIGINS: str = ""
 
     # LLM settings
     GROQ_API_KEY: str
     DEFAULT_MODEL: str = "llama-3.1-8b-instant"
     DEFAULT_TEMPERATURE: float = 0.0
+
+    def __init__(self, **values):
+        super().__init__(**values)
+        if not self.DEBUG:
+            db_user = os.getenv("DB_USER")
+            db_password = os.getenv("DB_PASSWORD")
+            db_host = os.getenv("DB_HOST")
+            db_port = os.getenv("DB_PORT")
+            db_name = os.getenv("DB_NAME")
+            self.DATABASE_URL = (
+                f"postgresql://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}"
+            )
 
     @field_validator("ALLOWED_ORIGINS")
     def parse_allowed_origins(cls, v: str) -> List[str]:
