@@ -1,7 +1,7 @@
 import {useState, useEffect} from 'react';
 
 function StoryGame({story, onNewStory}) {
-    const [currentNodeId, setCurrentNodeId] = useState(null)
+    const [currentNodeId, setCurrentNodeId] = useState(null);
     const [currentNode, setCurrentNode] = useState(null)
     const [options, setOptions] = useState([])
     const [isEnding, setIsEnding] = useState(false)
@@ -53,7 +53,7 @@ function StoryGame({story, onNewStory}) {
                 {isEnding ?
                     <div className="story-ending">
                         <h3>{isWinningEnding ? "Congratulations" : "The End"}</h3>
-                        {isWinningEnding ? "You won !" : "Your adventure has ended."}
+                        {isWinningEnding ? "You reached a winning ending" : "Your adventure has ended."}
                     </div>
                     :
                     <div className="story-options">
