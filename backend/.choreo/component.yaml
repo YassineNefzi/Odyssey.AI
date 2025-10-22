@@ -9,3 +9,5 @@ endpoints:
       networkVisibilities:
         - Project
         - Public
+
+      timeout: 300
