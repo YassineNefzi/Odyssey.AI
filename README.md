@@ -2,7 +2,6 @@
 
 <div align="center">
   <img src="assets/storygen.png" alt="CodeScout Logo"/>
-  <p><i>Automatically discover, analyze, and compare developer tools using AI</i></p>
 </div>
 
 Odyssey.AI is an AI-powered interactive story generator that creates branching narratives with multiple paths and endings. Users can choose their preferred story theme, explore dynamic story nodes, and shape the storyline in real time through their decisions.
