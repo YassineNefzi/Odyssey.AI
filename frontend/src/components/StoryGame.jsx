@@ -21,7 +21,13 @@ function StoryGame({story, onNewStory}) {
             const node = story.all_nodes[currentNodeId]
             setCurrentNode(node)
             setIsEnding(node.is_ending)
-            setIsWinningEnding(node.is_winning_endig)
+            setIsWinningEnding(node.is_winning_ending || node.is_winning_endig)
+
+            if (!node.is_ending && node.options && node.options.length > 0) {
+                setOptions(node.options)
+            } else {
+                setOptions([])
+            }
 
             if (node && node.content) {
                 setIsTyping(true)
@@ -36,14 +42,7 @@ function StoryGame({story, onNewStory}) {
                         clearInterval(typingInterval)
                     }
                 }, 10)
-
                 return () => clearInterval(typingInterval)
-            }
-
-            if (!node.is_ending && node.options && node.options.length > 0) {
-                setOptions(node.options)
-            } else {
-                setOptions([])
             }
         }
     }, [currentNodeId, story])
@@ -63,14 +62,12 @@ function StoryGame({story, onNewStory}) {
             <header className="story-header">
                 <h2>{story.title}</h2>
             </header>
-
             <div className="story-content">
                 {currentNode && (
                     <div className="story-node">
                         <p className={isTyping ? 'typing-animation' : ''}>
                             {displayText}
                         </p>
-
                         {isEnding ? (
                             <div className="story-ending">
                                 <h3>{isWinningEnding ? "🎉 Congratulations!" : "🏁 The End"}</h3>
@@ -101,7 +98,6 @@ function StoryGame({story, onNewStory}) {
                         )}
                     </div>
                 )}
-
                 <div className="story-controls">
                     <button onClick={restartStory} className="reset-btn">
                         Restart Story
