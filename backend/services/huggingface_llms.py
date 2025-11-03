@@ -4,9 +4,9 @@ from typing import Optional
 
 from langchain_huggingface import HuggingFaceEndpoint, ChatHuggingFace
 
-from ..config.logging import Logger
-from ..config.settings import get_settings
-from ..config.singleton import Singleton
+from config.logging import Logger
+from config.settings import get_settings
+from config.singleton import Singleton
 
 
 class HuggingFaceLLM(metaclass=Singleton):

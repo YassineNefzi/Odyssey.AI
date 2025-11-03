@@ -2,72 +2,81 @@ import {useState, useEffect} from 'react';
 
 function StoryGame({story, onNewStory}) {
     const [currentNodeId, setCurrentNodeId] = useState(null);
-    const [currentNode, setCurrentNode] = useState(null)
-    const [options, setOptions] = useState([])
-    const [isEnding, setIsEnding] = useState(false)
-    const [isWinningEnding, setIsWinningEnding] = useState(false)
-    const [displayText, setDisplayText] = useState('')
-    const [isTyping, setIsTyping] = useState(false)
+    const [currentNode, setCurrentNode] = useState(null);
+    const [options, setOptions] = useState([]);
+    const [isEnding, setIsEnding] = useState(false);
+    const [isWinningEnding, setIsWinningEnding] = useState(false);
+    const [displayText, setDisplayText] = useState('');
+    const [isTyping, setIsTyping] = useState(false);
 
     useEffect(() => {
         if (story && story.root_node) {
-            const rootNodeId = story.root_node.id
-            setCurrentNodeId(rootNodeId)
+            const rootNodeId = story.root_node.id;
+            setCurrentNodeId(rootNodeId);
         }
-    }, [story])
+    }, [story]);
 
     useEffect(() => {
         if (currentNodeId && story && story.all_nodes) {
-            const node = story.all_nodes[currentNodeId]
-            setCurrentNode(node)
-            setIsEnding(node.is_ending)
-            setIsWinningEnding(node.is_winning_ending || node.is_winning_endig)
+            const node = story.all_nodes[currentNodeId];
+            console.log('Current Node:', node);
+            setCurrentNode(node);
 
-            if (!node.is_ending && node.options && node.options.length > 0) {
-                setOptions(node.options)
-            } else {
-                setOptions([])
-            }
+            setIsEnding(node.is_ending || false);
+            setIsWinningEnding(node.is_winning_ending || false);
 
             if (node && node.content) {
-                setIsTyping(true)
-                setDisplayText('')
-                let currentIndex = 0
+                setIsTyping(true);
+                setDisplayText('');
+                let currentIndex = 0;
+
                 const typingInterval = setInterval(() => {
                     if (currentIndex <= node.content.length) {
-                        setDisplayText(node.content.slice(0, currentIndex))
-                        currentIndex++
+                        setDisplayText(node.content.slice(0, currentIndex));
+                        currentIndex++;
                     } else {
-                        setIsTyping(false)
-                        clearInterval(typingInterval)
+                        setIsTyping(false);
+                        clearInterval(typingInterval);
                     }
-                }, 10)
-                return () => clearInterval(typingInterval)
+                }, 10);
+
+                return () => clearInterval(typingInterval);
+            }
+
+            if (node && node.options && Array.isArray(node.options) && node.options.length > 0) {
+                console.log('Options found:', node.options);
+                setOptions(node.options);
+            } else {
+                console.log('No options found');
+                setOptions([]);
             }
         }
-    }, [currentNodeId, story])
+    }, [currentNodeId, story]);
 
     const chooseOption = (optionId) => {
-        setCurrentNodeId(optionId)
-    }
+        console.log('Choosing option:', optionId);
+        setCurrentNodeId(optionId);
+    };
 
     const restartStory = () => {
         if (story && story.root_node) {
-            setCurrentNodeId(story.root_node.id)
+            setCurrentNodeId(story.root_node.id);
         }
-    }
+    };
 
     return (
         <div className="story-game scanlines">
             <header className="story-header">
                 <h2>{story.title}</h2>
             </header>
+
             <div className="story-content">
                 {currentNode && (
                     <div className="story-node">
                         <p className={isTyping ? 'typing-animation' : ''}>
                             {displayText}
                         </p>
+
                         {isEnding ? (
                             <div className="story-ending">
                                 <h3>{isWinningEnding ? "🎉 Congratulations!" : "🏁 The End"}</h3>
@@ -83,21 +92,26 @@ function StoryGame({story, onNewStory}) {
                                 <div className="story-options">
                                     <h3>What will you do?</h3>
                                     <div className="options-list">
-                                        {options.map((option, index) => (
-                                            <button
-                                                key={index}
-                                                onClick={() => chooseOption(option.node_id)}
-                                                className="option-btn"
-                                            >
-                                                {option.text}
-                                            </button>
-                                        ))}
+                                        {options.length > 0 ? (
+                                            options.map((option, index) => (
+                                                <button
+                                                    key={index}
+                                                    onClick={() => chooseOption(option.node_id)}
+                                                    className="option-btn"
+                                                >
+                                                    {option.text}
+                                                </button>
+                                            ))
+                                        ) : (
+                                            <p>No choices available - this might be an ending.</p>
+                                        )}
                                     </div>
                                 </div>
                             )
                         )}
                     </div>
                 )}
+
                 <div className="story-controls">
                     <button onClick={restartStory} className="reset-btn">
                         Restart Story
@@ -110,7 +124,7 @@ function StoryGame({story, onNewStory}) {
                 </div>
             </div>
         </div>
-    )
+    );
 }
 
-export default StoryGame
+export default StoryGame;
