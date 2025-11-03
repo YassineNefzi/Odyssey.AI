@@ -13,7 +13,7 @@ from schemas.llm import StoryLLMResponse, StoryNodeLLM
 class StoryGenerator:
     @classmethod
     def _get_llm(cls):
-        return HuggingFaceLLM().get_llm()
+        return GroqLLM().get_llm()
 
     @classmethod
     def generate_story(
