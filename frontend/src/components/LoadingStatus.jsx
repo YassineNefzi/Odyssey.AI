@@ -1,15 +1,19 @@
 function LoadingStatus({theme}) {
-    return <div className="loading-container">
-        <h2>Generating Your {theme} Story</h2>
+    return (
+        <div className="loading-container scanlines">
+            <h2>Generating Your {theme} Story</h2>
 
-        <div className="loading-animation">
-            <div className="spinner"></div>
+            <div className="pixel-loader">
+                {[...Array(9)].map((_, i) => (
+                    <div key={i} className="pixel-dot" />
+                ))}
+            </div>
+
+            <p className="loading-info">
+                AI is crafting your pixel adventure...
+            </p>
         </div>
-
-        <p className="loading-info">
-            Please wait while we generate your story...
-        </p>
-    </div>
+    )
 }
 
 export default LoadingStatus;
