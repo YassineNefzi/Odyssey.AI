@@ -26,6 +26,10 @@ class Settings(BaseSettings):
     DEFAULT_MODEL: str = "llama-3.1-8b-instant"
     DEFAULT_TEMPERATURE: float = 0.0
 
+    HUGGING_FACE_API_KEY: str = os.getenv("HUGGING_FACE_API_KEY")
+    HUGGING_FACE_DEFAULT_MODEL: str = "deepseek-ai/DeepSeek-R1"
+    HUGGING_FACE_DEFAULT_TEMPERATURE: float = 0.0
+
     def __init__(self, **values):
         super().__init__(**values)
 

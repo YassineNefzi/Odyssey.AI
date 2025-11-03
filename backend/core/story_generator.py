@@ -4,6 +4,7 @@ from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import PydanticOutputParser
 
 from services.groq_llms import GroqLLM
+from services.huggingface_llms import HuggingFaceLLM
 from prompts.prompts import STORY_PROMPT
 from models.story import Story, StoryNode
 from schemas.llm import StoryLLMResponse, StoryNodeLLM
@@ -12,7 +13,7 @@ from schemas.llm import StoryLLMResponse, StoryNodeLLM
 class StoryGenerator:
     @classmethod
     def _get_llm(cls):
-        return GroqLLM().get_llm()
+        return HuggingFaceLLM().get_llm()
 
     @classmethod
     def generate_story(
